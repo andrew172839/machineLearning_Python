@@ -13,7 +13,6 @@ Note that those results can be highly dependent on the value of
 ``learning_rate_init``.
 """
 
-print(__doc__)
 import matplotlib.pyplot as plt
 from sklearn.neural_network import MLPClassifier
 from sklearn.preprocessing import MinMaxScaler
@@ -62,17 +61,15 @@ def plot_on_dataset(X, y, ax, name):
 
     for label, param in zip(labels, params):
         print("training: %s" % label)
-        mlp = MLPClassifier(verbose=0, random_state=0,
-                            max_iter=max_iter, **param)
+        mlp = MLPClassifier(verbose = 0, random_state = 0, max_iter = max_iter, **param)
         mlp.fit(X, y)
         mlps.append(mlp)
         print("Training set score: %f" % mlp.score(X, y))
         print("Training set loss: %f" % mlp.loss_)
     for mlp, label, args in zip(mlps, labels, plot_args):
-            ax.plot(mlp.loss_curve_, label=label, **args)
+            ax.plot(mlp.loss_curve_, label = label, **args)
 
-
-fig, axes = plt.subplots(2, 2, figsize=(15, 10))
+fig, axes = plt.subplots(2, 2, figsize = (15, 10))
 # load / generate some toy datasets
 #iris = datasets.load_iris()
 #digits = datasets.load_digits()
@@ -88,13 +85,10 @@ y = np.array([1 if i == 1. else -1 for i in y])
 #             (digits.data, digits.target),
 #             datasets.make_circles(noise=0.2, factor=0.5, random_state=1),
 #             datasets.make_moons(noise=0.3, random_state=0)]
-data_sets = [(X, y),
-             datasets.make_circles(noise=0.2, factor=0.5, random_state=1),
-             datasets.make_moons(noise=0.3, random_state=0)]
+data_sets = [(X, y), datasets.make_circles(noise = 0.2, factor = 0.5, random_state = 1), datasets.make_moons(noise = 0.3, random_state = 0)]
 
-for ax, data, name in zip(axes.ravel(), data_sets, ['iris', 'digits',
-                                                    'circles', 'moons']):
-    plot_on_dataset(*data, ax=ax, name=name)
+for ax, data, name in zip(axes.ravel(), data_sets, ['iris', 'digits', 'circles', 'moons']):
+    plot_on_dataset(*data, ax = ax, name = name)
 
-fig.legend(ax.get_lines(), labels=labels, ncol=3, loc="upper center")
+fig.legend(ax.get_lines(), labels = labels, ncol = 3, loc = "upper center")
 plt.show()

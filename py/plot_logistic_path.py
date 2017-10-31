@@ -1,10 +1,7 @@
-#!/usr/bin/env python
 """
 Path with L1- Logistic Regression
 Computes path on IRIS dataset.
 """
-
-print(__doc__)
 
 from datetime import datetime
 import numpy as np
@@ -36,7 +33,7 @@ start = datetime.now()
 clf = linear_model.LogisticRegression(C=1.0, penalty='l1', tol=1e-6)
 coefs_ = []
 for c in cs:
-    clf.set_params(C=c)
+    clf.set_params(C = c)
     clf.fit(X, y)
     coefs_.append(clf.coef_.ravel().copy())
 print("This took ", datetime.now() - start)

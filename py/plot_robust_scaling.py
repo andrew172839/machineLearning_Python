@@ -1,6 +1,3 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-
 """
 =========================================================
 Robust Scaling on Toy Data
@@ -15,13 +12,8 @@ against outliers.
 Here, we demonstrate this on a toy dataset, where one single datapoint
 is a large outlier.
 """
+
 from __future__ import print_function
-print(__doc__)
-
-
-# Code source: Thomas Unterthiner
-# License: BSD 3 clause
-
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.preprocessing import StandardScaler, RobustScaler
@@ -64,10 +56,9 @@ Xte_r = robust_scaler.transform(X_test)
 
 # Plot data
 fig, ax = plt.subplots(1, 3, figsize=(12, 4))
-ax[0].scatter(X_train[:, 0], X_train[:, 1],
-              color=np.where(Y_train > 0, 'r', 'b'))
-ax[1].scatter(Xtr_s[:, 0], Xtr_s[:, 1], color=np.where(Y_train > 0, 'r', 'b'))
-ax[2].scatter(Xtr_r[:, 0], Xtr_r[:, 1], color=np.where(Y_train > 0, 'r', 'b'))
+ax[0].scatter(X_train[:, 0], X_train[:, 1], color = np.where(Y_train > 0, 'r', 'b'))
+ax[1].scatter(Xtr_s[:, 0], Xtr_s[:, 1], color = np.where(Y_train > 0, 'r', 'b'))
+ax[2].scatter(Xtr_r[:, 0], Xtr_r[:, 1], color = np.where(Y_train > 0, 'r', 'b'))
 ax[0].set_title("Unscaled data")
 ax[1].set_title("After standard scaling (zoomed in)")
 ax[2].set_title("After robust scaling (zoomed in)")
@@ -78,7 +69,6 @@ for a in ax[1:]:
 plt.tight_layout()
 plt.show()
 
-
 # Classify using k-NN
 from sklearn.neighbors import KNeighborsClassifier
 
@@ -88,4 +78,4 @@ acc_s = knn.score(Xte_s, Y_test)
 print("Testset accuracy using standard scaler: %.3f" % acc_s)
 knn.fit(Xtr_r, Y_train)
 acc_r = knn.score(Xte_r, Y_test)
-print("Testset accuracy using robust scaler:   %.3f" % acc_r)
+print("Testset accuracy using robust scaler: %.3f" % acc_r)
