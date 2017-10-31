@@ -20,7 +20,6 @@ kind of dependency between variables and it rates x_2 as the most
 discriminative feature, which probably agrees better with our intuitive
 perception for this example. Both methods correctly marks x_3 as irrelevant.
 """
-print(__doc__)
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -49,7 +48,5 @@ for i in range(3):
     plt.xlabel("$x_{}$".format(i + 1), fontsize=14)
     if i == 0:
         plt.ylabel("$y$", fontsize=14)
-    plt.title("F-test={:.2f}, MI={:.2f}".format(f_test[i], mi[i]),
-              fontsize=16)
+    plt.title("F-test={:.2f}, MI={:.2f}".format(f_test[i], mi[i]), fontsize=16)
 plt.show()
-
