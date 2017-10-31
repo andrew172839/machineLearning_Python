@@ -1,15 +1,9 @@
 """
-================================
 SVM Exercise
-================================
-
 A tutorial exercise for using different SVM kernels.
-
-This exercise is used in the :ref:`using_kernels_tut` part of the
-:ref:`supervised_learning_tut` section of the :ref:`stat_learn_tut_index`.
 """
-print(__doc__)
 
+print(__doc__)
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -37,8 +31,12 @@ from sklearn.model_selection import train_test_split
 #y_test = y[.9 * n_sample:]
 
 a = pd.read_csv('sample20170117_labeled_0207.csv')
+# X = a.values[0: 100, 0: 2]
+# y = a.values[0: 100, 110]
+
 X = a.values[0: 100, 0: 2]
 y = a.values[0: 100, 110]
+
 y = np.array([1 if i == 1. else -1 for i in y])
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 42)
 
@@ -49,10 +47,10 @@ for fig_num, kernel in enumerate(('linear', 'rbf', 'poly')):
 
     plt.figure(fig_num)
     plt.clf()
-    plt.scatter(X[:, 0], X[:, 1], c=y, zorder=10, cmap=plt.cm.Paired)
+    plt.scatter(X[:, 0], X[:, 1], c = y, zorder = 10, cmap = plt.cm.Paired)
 
     # Circle out the test data
-    plt.scatter(X_test[:, 0], X_test[:, 1], s=80, facecolors='none', zorder=10)
+    plt.scatter(X_test[:, 0], X_test[:, 1], s = 80, facecolors = 'none', zorder = 10)
 
     plt.axis('tight')
     x_min = X[:, 0].min()
@@ -65,9 +63,8 @@ for fig_num, kernel in enumerate(('linear', 'rbf', 'poly')):
 
     # Put the result into a color plot
     Z = Z.reshape(XX.shape)
-    plt.pcolormesh(XX, YY, Z > 0, cmap=plt.cm.Paired)
-    plt.contour(XX, YY, Z, colors=['k', 'k', 'k'], linestyles=['--', '-', '--'],
-                levels=[-.5, 0, .5])
-
+    plt.pcolormesh(XX, YY, Z > 0, cmap = plt.cm.Paired)
+    plt.contour(XX, YY, Z, colors=['k', 'k', 'k'], linestyles=['--', '-', '--'], levels=[-.5, 0, .5])
     plt.title(kernel)
+
 plt.show()

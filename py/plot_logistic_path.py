@@ -1,16 +1,10 @@
 #!/usr/bin/env python
 """
-=================================
 Path with L1- Logistic Regression
-=================================
-
 Computes path on IRIS dataset.
-
 """
-print(__doc__)
 
-# Author: Alexandre Gramfort <alexandre.gramfort@inria.fr>
-# License: BSD 3 clause
+print(__doc__)
 
 from datetime import datetime
 import numpy as np
@@ -34,11 +28,8 @@ y = a.values[0: 100, 110]
 y = np.array([1 if i == 1. else -1 for i in y])
 
 X -= np.mean(X, 0)
-###############################################################################
-# Demo path functions
 
 cs = l1_min_c(X, y, loss='log') * np.logspace(0, 3)
-
 
 print("Computing regularization path ...")
 start = datetime.now()

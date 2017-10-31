@@ -14,7 +14,7 @@ y = np.array([1 if i == 1. else -1 for i in y])
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 0)
 #X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2)
 
-print 'train:'
-print X_train
-print 'test:'
-print X_test
+print('train:')
+print(X_train)
+print('test:')
+print(X_test)
