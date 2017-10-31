@@ -1,6 +1,3 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-
 """
 =========================================================
 Linear Regression Example
@@ -16,12 +13,6 @@ The coefficients, the residual sum of squares and the variance score are also
 calculated.
 
 """
-print(__doc__)
-
-
-# Code source: Jaques Grobler
-# License: BSD 3 clause
-
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -60,15 +51,13 @@ regr.fit(diabetes_X_train, diabetes_y_train)
 # The coefficients
 print('Coefficients: \n', regr.coef_)
 # The mean squared error
-print("Mean squared error: %.2f"
-      % np.mean((regr.predict(diabetes_X_test) - diabetes_y_test) ** 2))
+print("Mean squared error: %.2f" % np.mean((regr.predict(diabetes_X_test) - diabetes_y_test) ** 2))
 # Explained variance score: 1 is perfect prediction
 print('Variance score: %.2f' % regr.score(diabetes_X_test, diabetes_y_test))
 
 # Plot outputs
-plt.scatter(diabetes_X_test, diabetes_y_test,  color='black')
-plt.plot(diabetes_X_test, regr.predict(diabetes_X_test), color='blue',
-         linewidth=3)
+#plt.scatter(diabetes_X_test, diabetes_y_test,  color='black')
+plt.plot(diabetes_X_test, regr.predict(diabetes_X_test), color = 'blue', linewidth = 3)
 
 plt.xticks(())
 plt.yticks(())
