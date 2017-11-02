@@ -1,93 +1,73 @@
-#  Copyright 2016 The TensorFlow Authors. All Rights Reserved.
-#
-#  Licensed under the Apache License, Version 2.0 (the "License");
-#  you may not use this file except in compliance with the License.
-#  You may obtain a copy of the License at
-#
-#   http://www.apache.org/licenses/LICENSE-2.0
-#
-#  Unless required by applicable law or agreed to in writing, software
-#  distributed under the License is distributed on an "AS IS" BASIS,
-#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#  See the License for the specific language governing permissions and
-#  limitations under the License.
-"""Example of DNNClassifier for Iris plant dataset, with early stopping."""
-
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
-
 import shutil
 import pandas as pd
 import numpy as np
-
+import tensorflow as tf
 from sklearn import datasets
 from sklearn import metrics
 from sklearn.cross_validation import train_test_split
-import tensorflow as tf
+from sklearn.datasets import make_classification
 
 learn = tf.contrib.learn
 
 
 def clean_folder(folder):
-  """Cleans the given folder if it exists."""
-  try:
-    shutil.rmtree(folder)
-  except OSError:
-    pass
+    try:
+        shutil.rmtree(folder)
+    except OSError:
+        pass
 
 
 def main(unused_argv):
-  #iris = datasets.load_iris()
+    # iris = datasets.load_iris()
 
-  a = pd.read_csv('sample20170117_labeled_0207.csv')
-  training = a.values[:, 0: 110]
-  label = a.values[:, 110]
-  label = np.array([1 if i == 1. else -1 for i in label])
+    # a = pd.read_csv('sample20170117_labeled_0207.csv')
+    # x = a.values[:, 0: 110]
+    # y = a.values[:, 110]
+    # y = np.array([1 if i == 1. else -1 for i in y])
 
-  #x_train, x_test, y_train, y_test = train_test_split(
-  #    iris.data, iris.target, test_size=0.2, random_state=42)
-  x_train, x_test, y_train, y_test = train_test_split(
-        training, label, test_size=0.2, random_state=42)
+    x, y = make_classification(n_samples=1000, n_features=100, n_classes=2)
 
-  x_train, x_val, y_train, y_val = train_test_split(
-      x_train, y_train, test_size=0.2, random_state=42)
-  val_monitor = learn.monitors.ValidationMonitor(
-      x_val, y_val, early_stopping_rounds=200)
+    # x_train, x_test, y_train, y_test = train_test_split(iris.data, iris.target, test_size=0.2, random_state=42)
+    x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    x_train, x_val, y_train, y_val = train_test_split(x_train, y_train, test_size=0.2, random_state=42)
 
-  model_dir = '/tmp/iris_model'
-  clean_folder(model_dir)
+    val_monitor = learn.monitors.ValidationMonitor(x_val, y_val, early_stopping_rounds=200)
 
-  # classifier with early stopping on training data
-  classifier1 = learn.DNNClassifier(
-      feature_columns=learn.infer_real_valued_columns_from_input(x_train),
-      hidden_units=[10, 20, 10],
-      n_classes=3,
-      model_dir=model_dir)
-  classifier1.fit(x=x_train, y=y_train, steps=2000)
-  predictions1 = list(classifier1.predict(x_test, as_iterable=True))
-  score1 = metrics.accuracy_score(y_test, predictions1)
+    # model_dir = '/tmp/iris_model'
+    model_dir = 'C:/Users/yushao/PycharmProjects/hw/model'
+    clean_folder(model_dir)
 
-  model_dir = '/tmp/iris_model_val'
-  clean_folder(model_dir)
+    classifier1 = learn.DNNClassifier(
+        feature_columns=learn.infer_real_valued_columns_from_input(x_train),
+        hidden_units=[10, 20, 10],
+        n_classes=2,
+        model_dir=model_dir)
+    classifier1.fit(x=x_train, y=y_train, steps=2000)
+    predictions1 = list(classifier1.predict(x_test, as_iterable=True))
+    score1 = metrics.accuracy_score(y_test, predictions1)
 
-  # classifier with early stopping on validation data, save frequently for
-  # monitor to pick up new checkpoints.
-  classifier2 = learn.DNNClassifier(
-      feature_columns=learn.infer_real_valued_columns_from_input(x_train),
-      hidden_units=[10, 20, 10],
-      n_classes=3,
-      model_dir=model_dir,
-      config=tf.contrib.learn.RunConfig(save_checkpoints_secs=1))
-  classifier2.fit(x=x_train, y=y_train, steps=2000, monitors=[val_monitor])
-  predictions2 = list(classifier2.predict(x_test, as_iterable=True))
-  score2 = metrics.accuracy_score(y_test, predictions2)
+    # model_dir = '/tmp/iris_model_val'
+    model_dir = 'C:/Users/yushao/PycharmProjects/hw/model_val'
+    clean_folder(model_dir)
 
-  # In many applications, the score is improved by using early stopping
-  print('score1: ', score1)
-  print('score2: ', score2)
-  print('score2 > score1: ', score2 > score1)
+    # classifier with early stopping on validation data, save frequently for monitor to pick up new checkpoints.
+    classifier2 = learn.DNNClassifier(
+        feature_columns=learn.infer_real_valued_columns_from_input(x_train),
+        hidden_units=[10, 20, 10],
+        n_classes=3,
+        model_dir=model_dir,
+        config=tf.contrib.learn.RunConfig(save_checkpoints_secs=1))
+    classifier2.fit(x=x_train, y=y_train, steps=2000, monitors=[val_monitor])
+    predictions2 = list(classifier2.predict(x_test, as_iterable=True))
+    score2 = metrics.accuracy_score(y_test, predictions2)
+
+    print('score1: ', score1)
+    print('score2: ', score2)
+    print('score2 > score1: ', score2 > score1)
 
 
 if __name__ == '__main__':
-  tf.app.run()
+    tf.app.run()
