@@ -34,7 +34,7 @@ def main(unused_argv):
     regressor.fit(x_train, y_train, steps=5000, batch_size=1)
     y_predicted = list(regressor.predict(scaler.transform(x_test), as_iterable=True))
     score = metrics.mean_squared_error(y_predicted, y_test)
-    print('mse: {0: f}'.format(score))
+    print('mse, {0: f}'.format(score))
 
 if __name__ == '__main__':
     tf.app.run()
