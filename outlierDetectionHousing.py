@@ -18,7 +18,6 @@ colors = ['m', 'g', 'b']
 legend1 = {}
 legend2 = {}
 
-# Learn a frontier for outlier detection with several classifiers
 xx1, yy1 = np.meshgrid(np.linspace(-8, 28, 500), np.linspace(3, 40, 500))
 xx2, yy2 = np.meshgrid(np.linspace(3, 10, 500), np.linspace(-5, 45, 500))
 for i, (clf_name, clf) in enumerate(classifiers.items()):
