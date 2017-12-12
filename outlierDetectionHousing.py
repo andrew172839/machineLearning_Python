@@ -1,19 +1,17 @@
-# Outlier detection on a real data set
-
 import numpy as np
-from sklearn.covariance import EllipticEnvelope
-from sklearn.svm import OneClassSVM
 import matplotlib.pyplot as plt
 import matplotlib.font_manager
 from sklearn.datasets import load_boston
+from sklearn.covariance import EllipticEnvelope
+from sklearn.svm import OneClassSVM
 
 X1 = load_boston()['data'][:, [8, 10]]  # two clusters
-X2 = load_boston()['data'][:, [5, 12]]  # "banana"-shaped
+X2 = load_boston()['data'][:, [5, 12]]  # banana-shaped
 
 classifiers = {
-    "Empirical Covariance": EllipticEnvelope(support_fraction=1., contamination=0.261),
-    "Robust Covariance (Minimum Covariance Determinant)": EllipticEnvelope(contamination=0.261),
-    "OCSVM": OneClassSVM(nu=0.261, gamma=0.05)}
+    "empirical covariance": EllipticEnvelope(support_fraction=1., contamination=0.261),
+    "robust covariance (minimum covariance determinant)": EllipticEnvelope(contamination=0.261),
+    "ocsvm": OneClassSVM(nu=0.261, gamma=0.05)}
 colors = ['m', 'g', 'b']
 legend1 = {}
 legend2 = {}
@@ -36,7 +34,7 @@ legend1_values_list = list(legend1.values())
 legend1_keys_list = list(legend1.keys())
 
 plt.figure(1)  # two clusters
-plt.title("Outlier detection on a real data set (boston housing)")
+plt.title("outlier detection on a real data set (boston housing)")
 plt.scatter(X1[:, 0], X1[:, 1], color='black')
 bbox_args = dict(boxstyle="round", fc="0.8")
 arrow_args = dict(arrowstyle="->")
@@ -57,8 +55,8 @@ plt.xlabel("pupil-teacher ratio by town")
 legend2_values_list = list(legend2.values())
 legend2_keys_list = list(legend2.keys())
 
-plt.figure(2)  # "banana" shape
-plt.title("Outlier detection on a real data set (boston housing)")
+plt.figure(2)  # banana shape
+plt.title("outlier detection on a real data set (boston housing)")
 plt.scatter(X2[:, 0], X2[:, 1], color='black')
 plt.xlim((xx2.min(), xx2.max()))
 plt.ylim((yy2.min(), yy2.max()))
@@ -70,5 +68,4 @@ plt.legend((legend2_values_list[0].collections[0],
            prop=matplotlib.font_manager.FontProperties(size=12))
 plt.ylabel("% lower status of the population")
 plt.xlabel("average number of rooms per dwelling")
-
 plt.show()

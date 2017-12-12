@@ -1,7 +1,6 @@
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
-
 from sklearn import datasets
 from sklearn import metrics
 from sklearn.cross_validation import train_test_split
@@ -18,16 +17,16 @@ def optimizer_exp_decay():
 
 
 def main(unused_argv):
-    # iris = datasets.load_iris()
+    iris = datasets.load_iris()
 
-    a = pd.read_csv('sample20170117_labeled_0207.csv')
-    training = a.values[:, 0: 110]
-    label = a.values[:, 110]
-    label = np.array([1 if i == 1. else -1 for i in label])
+    x_train, x_test, y_train, y_test = train_test_split(
+        iris.data, iris.target, test_size=0.2)
 
-    # x_train, x_test, y_train, y_test = train_test_split(
-    #    iris.data, iris.target, test_size=0.2, random_state=42)
-    x_train, x_test, y_train, y_test = train_test_split(training, label, test_size=0.2, random_state=42)
+    # a = pd.read_csv('sample20170117_labeled_0207.csv')
+    # training = a.values[:, 0: 110]
+    # label = a.values[:, 110]
+
+    # x_train, x_test, y_train, y_test = train_test_split(training, label, test_size=0.2, random_state=42)
 
     feature_columns = tf.contrib.learn.infer_real_valued_columns_from_input(x_train)
     classifier = tf.contrib.learn.DNNClassifier(feature_columns=feature_columns,
@@ -38,7 +37,7 @@ def main(unused_argv):
     classifier.fit(x_train, y_train, steps=800)
     predictions = list(classifier.predict(x_test, as_iterable=True))
     score = metrics.accuracy_score(y_test, predictions)
-    print('Accuracy: {0:f}'.format(score))
+    print('accuracy, {0:f}'.format(score))
 
 
 if __name__ == '__main__':
