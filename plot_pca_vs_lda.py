@@ -26,10 +26,10 @@ from sklearn import datasets
 from sklearn.decomposition import PCA
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 
-#iris = datasets.load_iris()
-#X = iris.data
-#y = iris.target
-#target_names = iris.target_names
+# iris = datasets.load_iris()
+# X = iris.data
+# y = iris.target
+# target_names = iris.target_names
 
 a = pd.read_csv('sample20170117_labeled_0207.csv')
 X = a.values[:, 0: 110]

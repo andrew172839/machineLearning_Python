@@ -2,8 +2,8 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 from sklearn import datasets
-from sklearn import metrics
-from sklearn.cross_validation import train_test_split
+#from sklearn import metrics
+#from sklearn.cross_validation import train_test_split
 import tensorflow as tf
 import pandas as pd
 import numpy as np
@@ -19,8 +19,7 @@ def optimizer_exp_decay():
 def main(unused_argv):
     iris = datasets.load_iris()
 
-    x_train, x_test, y_train, y_test = train_test_split(
-        iris.data, iris.target, test_size=0.2)
+    x_train, x_test, y_train, y_test = train_test_split(iris.data, iris.target, test_size=0.2)
 
     # a = pd.read_csv('sample20170117_labeled_0207.csv')
     # training = a.values[:, 0: 110]

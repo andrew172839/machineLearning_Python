@@ -3,7 +3,7 @@ import seaborn as sns
 import numpy as np
 from sklearn.cross_validation import train_test_split
 from sklearn.linear_model import LogisticRegressionCV
-from keras.models import Sequential
+import keras.models
 from keras.layers.core import Dense, Activation
 from keras.utils import np_utils
 
@@ -14,7 +14,7 @@ from keras.utils import np_utils
 
 import pandas as pd
 
-a = pd.read_csv('sample20170117_labeled_0207.csv')
+#a = pd.read_csv('C:\sample20170117_labeled_0207.csv')
 X = a.values[0: 50, 0: 110]
 y = a.values[0: 50, 110]
 y = np.array([1 if i == 1. else -1 for i in y])
