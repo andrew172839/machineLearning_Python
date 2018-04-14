@@ -1,3 +1,5 @@
+import numpy as np
+
 # create a grid on which to evaluate the distributions
 grid = np.linspace(-3, 6, 100)
 xgrid, ygrid = np.meshgrid(grid, grid)
