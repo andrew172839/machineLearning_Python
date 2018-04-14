@@ -3,7 +3,7 @@ import numpy as np
 from sklearn import cross_validation
 from sklearn.model_selection import train_test_split
 
-a = pd.read_csv('sample20170117_labeled_0207.csv')
+a = pd.read_csv('C:/Users/yushao/Documents/GitHub/machineLearning_Python/sample20170117_labeled_0207.csv')
 
 #X = a.values[:, 0: 110]
 X = a.values[0: 100, 0: 110]
