@@ -10,27 +10,20 @@ import numpy as np
 
 
 def main(unused_argv):
-    # iris = tf.contrib.learn.datasets.load_dataset('iris')
-    # x_train, x_test, y_train, y_test = cross_validation.train_test_split(iris.data, iris.target, test_size=0.2,
-    #                                                                      random_state=42)
+    iris = tf.contrib.learn.datasets.load_dataset('iris')
+    x_train, x_test, y_train, y_test = cross_validation.train_test_split(iris.data, iris.target, test_size=0.2,
+                                                                         random_state=42)
 
     # X, y = make_classification(n_samples=100, n_features=10, n_classes=2)
 
-    # a = pd.read_csv('sample20170117_labeled_0207.csv')
-    # training = a.values[:, 0: 110]
-    # label = a.values[:, 110]
-    # label = np.array([1 if i == 1. else -1 for i in label])
-    # x_train, x_test, y_train, y_test = cross_validation.train_test_split(training, label, test_size=0.2,
-    #                                                                      random_state=42)
-
-    # Build 3 layer DNN with 10, 20, 10 units respectively.
+    # build 3 layer dnn with 10, 20, 10 units respectively.
     feature_columns = tf.contrib.learn.infer_real_valued_columns_from_input(x_train)
     classifier = tf.contrib.learn.DNNClassifier(feature_columns=feature_columns, hidden_units=[10, 20, 10], n_classes=3)
 
     classifier.fit(x_train, y_train, steps=200)
     predictions = list(classifier.predict(x_test, as_iterable=True))
     score = metrics.accuracy_score(y_test, predictions)
-    print('Accuracy: {0:f}'.format(score))
+    print('accuracy, {0: f}'.format(score))
 
 
 if __name__ == '__main__':
