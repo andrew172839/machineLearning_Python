@@ -1,5 +1,3 @@
-# MNIST dataset benchmark
-
 from __future__ import division, print_function
 from time import time
 from sklearn.datasets import fetch_mldata

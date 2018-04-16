@@ -9,7 +9,7 @@ from sklearn.gaussian_process.kernels import RBF
 from sklearn import datasets
 
 iris = datasets.load_iris()
-X = iris.data[:, 0:2]  # we only take the first two features for visualization
+X = iris.data[:, 0:2]
 y = iris.target
 
 n_features = X.shape[1]
@@ -17,11 +17,11 @@ n_features = X.shape[1]
 C = 1.0
 kernel = 1.0 * RBF([1.0, 1.0])
 
-classifiers = {'L1 logistic': LogisticRegression(C=C, penalty='l1'),
-               'L2 logistic (OvR)': LogisticRegression(C=C, penalty='l2'),
-               'Linear SVC': SVC(kernel='linear', C=C, probability=True, random_state=0),
-               'L2 logistic (Multinomial)': LogisticRegression(C=C, solver='lbfgs', multi_class='multinomial'),
-               'GPC': GaussianProcessClassifier(kernel)}
+classifiers = {'l1 logistic': LogisticRegression(C=C, penalty='l1'),
+               'l2 logistic (OvR)': LogisticRegression(C=C, penalty='l2'),
+               'linear SVC': SVC(kernel='linear', C=C, probability=True, random_state=0),
+               'l2 logistic (multinomial)': LogisticRegression(C=C, solver='lbfgs', multi_class='multinomial'),
+               'gpc': GaussianProcessClassifier(kernel)}
 
 n_classifiers = len(classifiers)
 
