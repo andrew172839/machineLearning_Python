@@ -9,19 +9,10 @@ import tensorflow as tf
 import pandas as pd
 import numpy as np
 
+
 def main(unused_argv):
-    # boston = tf.contrib.learn.datasets.load_dataset('boston')
-    # x, y = boston.data, boston.target
-
-    # a = pd.read_csv('sample20170117_labeled_0207.csv')
-    # x = a.values[:, 0: 110]
-    # y = a.values[:, 110]
-    # y = np.array([1 if i == 1. else -1 for i in y])
-
-    # x, y = make_classification(n_samples=1000, n_features=100, n_classes=2)
-
-    x = 1. / (np.arange(1, 11) + np.arange(0, 10)[:, np.newaxis])
-    y = np.ones(10)
+    boston = tf.contrib.learn.datasets.load_dataset('boston')
+    x, y = boston.data, boston.target
 
     x_train, x_test, y_train, y_test = cross_validation.train_test_split(x, y, test_size=0.2, random_state=42)
 
