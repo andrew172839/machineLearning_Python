@@ -25,14 +25,13 @@ memory = Memory(os.path.join(get_data_home(), 'mnist_benchmark_data'), mmap_mode
 
 @memory.cache
 def load_data(dtype=np.float32, order='F'):
-    print("Loading dataset...")
-    data = fetch_mldata('MNIST original')
+    print("loading dataset...")
+    data = fetch_mldata('mnist')
     X = check_array(data['data'], dtype=dtype, order=order)
     y = data["target"]
 
     X = X / 255
 
-    print("Creating train-test split...")
     n_train = 60000
     X_train = X[:n_train]
     y_train = y[:n_train]
@@ -44,11 +43,11 @@ def load_data(dtype=np.float32, order='F'):
 
 ESTIMATORS = {
     "dummy": DummyClassifier(),
-    'CART': DecisionTreeClassifier(),
-    'ExtraTrees': ExtraTreesClassifier(n_estimators=100),
-    'RandomForest': RandomForestClassifier(n_estimators=100),
-    'Nystroem-SVM': make_pipeline(Nystroem(gamma=0.015, n_components=1000), LinearSVC(C=100)),
-    'SampledRBF-SVM': make_pipeline(RBFSampler(gamma=0.015, n_components=1000), LinearSVC(C=100)),
+    'cart': DecisionTreeClassifier(),
+    'extraTrees': ExtraTreesClassifier(n_estimators=100),
+    'randomForest': RandomForestClassifier(n_estimators=100),
+    'nystroem-svm': make_pipeline(Nystroem(gamma=0.015, n_components=1000), LinearSVC(C=100)),
+    'sampledRbf-': make_pipeline(RBFSampler(gamma=0.015, n_components=1000), LinearSVC(C=100)),
     'LogisticRegression-SAG': LogisticRegression(solver='sag', tol=1e-1, C=1e4),
     'LogisticRegression-SAGA': LogisticRegression(solver='saga', tol=1e-1, C=1e4),
     'MultilayerPerceptron': MLPClassifier(
@@ -92,7 +91,7 @@ if __name__ == "__main__":
     print("%s %d (size=%dMB)" % ("number of test samples:".ljust(25), X_test.shape[0], int(X_test.nbytes / 1e6)))
 
     print()
-    print("training Classifiers")
+    print("training classifiers")
     print("====================")
     error, train_time, test_time = {}, {}, {}
     for name in sorted(args["classifiers"]):
