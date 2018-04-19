@@ -20,4 +20,4 @@ for i in range(n):
 
 for x, _ in training_data:
     result = dot(x, w)
-    print("{}: {} -> {}".format(x[:2], result, unit_step(result)))
+    print("{}, {} -> {}".format(x[:2], result, unit_step(result)))
