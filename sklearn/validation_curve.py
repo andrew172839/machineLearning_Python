@@ -1,18 +1,23 @@
-# plotting validation curves
-
 import matplotlib.pyplot as plt
 import numpy as np
-import pandas as pd
 
 from sklearn.datasets import load_digits
 from sklearn.svm import SVC
 from sklearn.model_selection import validation_curve
+
+from sklearn import datasets
 from sklearn.datasets import make_classification
+import pandas as pd
 
-# digits = load_digits()
-# X, y = digits.data, digits.target
+digits = load_digits()
+X, y = digits.data, digits.target
 
-X, y = make_classification(n_samples=1000, n_features=10, n_classes=2, random_state=0)
+# a = pd.read_csv('sample20170117_labeled_0207.csv')
+# X = a.values[0: 100, 0: 110]
+# y = a.values[0: 100, 110]
+# y = np.array([1 if i == 1. else -1 for i in y])
+
+# X, y = make_classification(n_samples=1000, n_features=10, n_classes=2)
 
 param_range = np.logspace(-6, -1, 5)
 train_scores, test_scores = validation_curve(SVC(), X, y, param_name="gamma", param_range=param_range, cv=10,
