@@ -1,31 +1,35 @@
-from __future__ import print_function
-
-print(__doc__)
-
 import numpy as np
 import matplotlib.pyplot as plt
-import pandas as pd
 
-from sklearn import datasets
 from sklearn.linear_model import LassoCV
 from sklearn.linear_model import Lasso
 from sklearn.model_selection import KFold
 from sklearn.model_selection import cross_val_score
-
-diabetes = datasets.load_diabetes()
-X = diabetes.data[:150]
-y = diabetes.target[:150]
-
 from sklearn import cross_validation
 from sklearn.model_selection import train_test_split
 
-lasso = Lasso(random_state=0)
+from sklearn import datasets
+from sklearn.datasets import make_classification
+import pandas as pd
+
+# diabetes = datasets.load_diabetes()
+# X = diabetes.data[:150]
+# y = diabetes.target[:150]
+
+# a = pd.read_csv('sample20170117_labeled_0207.csv')
+# X = a.values[0: 100, 0: 110]
+# y = a.values[0: 100, 110]
+# y = np.array([1 if i == 1. else -1 for i in y])
+
+X, y = make_classification(n_samples=1000, n_features=100, n_classes=2)
+
+lasso = Lasso()
 alphas = np.logspace(-4, -0.5, 30)
 
 scores = list()
 scores_std = list()
 
-n_folds = 3
+n_folds = 10
 
 for alpha in alphas:
     lasso.alpha = alpha
@@ -50,11 +54,11 @@ plt.xlabel('alpha')
 plt.axhline(np.max(scores), linestyle='--', color='.5')
 plt.xlim([alphas[0], alphas[-1]])
 
-lasso_cv = LassoCV(alphas=alphas, random_state=0)
+lasso_cv = LassoCV(alphas=alphas)
 k_fold = KFold(3)
 
 for k, (train, test) in enumerate(k_fold.split(X, y)):
     lasso_cv.fit(X[train], y[train])
-    print("[fold {0}] alpha: {1:.5f}, score: {2:.5f}".format(k, lasso_cv.alpha_, lasso_cv.score(X[test], y[test])))
+    print("[fold {0}] alpha, {1:.5f}, score, {2:.5f}".format(k, lasso_cv.alpha_, lasso_cv.score(X[test], y[test])))
 
 plt.show()
