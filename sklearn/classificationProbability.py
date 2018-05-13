@@ -1,18 +1,36 @@
 import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
-
 from sklearn.linear_model import LogisticRegression
 from sklearn.svm import SVC
 from sklearn.gaussian_process import GaussianProcessClassifier
 from sklearn.gaussian_process.kernels import RBF
+
+import pandas as pd
+import numpy as np
 from sklearn import datasets
+from sklearn.datasets import make_classification
+from sklearn.model_selection import train_test_split
 
 iris = datasets.load_iris()
 X = iris.data[:, 0:2]
 y = iris.target
 
-n_features = X.shape[1]
+
+
+
+# a = pd.read_csv('sample20170117_labeled_0207.csv')
+# X = a.values[0: 100, 0: 110]
+# y = a.values[0: 100, 110]
+# y = np.array([1 if i == 1. else -1 for i in y])
+
+# iris = datasets.load_iris()
+# X = iris.data
+# y = iris.target
+
+# X, y = make_classification(n_samples=1000, n_features=100, n_classes=2)
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+
+n_features = X_train.shape[1]
 
 C = 1.0
 kernel = 1.0 * RBF([1.0, 1.0])
@@ -34,9 +52,9 @@ xx, yy = np.meshgrid(xx, yy)
 Xfull = np.c_[xx.ravel(), yy.ravel()]
 
 for index, (name, classifier) in enumerate(classifiers.items()):
-    classifier.fit(X, y)
+    classifier.fit(X_train, y_train)
 
-    y_pred = classifier.predict(X)
+    y_pred = classifier.predict(X_train)
     classif_rate = np.mean(y_pred.ravel() == y.ravel()) * 100
     print("classif_rate for %s : %f " % (name, classif_rate))
 
@@ -52,7 +70,7 @@ for index, (name, classifier) in enumerate(classifiers.items()):
         plt.yticks(())
         idx = (y_pred == k)
         if idx.any():
-            plt.scatter(X[idx, 0], X[idx, 1], marker='o', c='k')
+            plt.scatter(X_train[idx, 0], X_train[idx, 1], marker='o', c='k')
 
 ax = plt.axes([0.15, 0.04, 0.7, 0.05])
 plt.title("probability")
