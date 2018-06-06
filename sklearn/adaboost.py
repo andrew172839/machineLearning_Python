@@ -1,30 +1,29 @@
-import numpy as np
 import matplotlib.pyplot as plt
-
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import zero_one_loss
 from sklearn.ensemble import AdaBoostClassifier
 
 import pandas as pd
+import numpy as np
 from sklearn import datasets
 from sklearn.datasets import make_classification
 from sklearn.model_selection import train_test_split
 
 n_estimators = 400
-learning_rate = 1.
+learning_rate = 1.0
 
 X, y = datasets.make_hastie_10_2(n_samples=12000)
+
+# a = pd.read_csv('sample20170117_labeled_0207.csv')
+# X = a.values[0: 100, 0: 110]
+# y = a.values[0: 100, 110]
+# y = np.array([1 if i == 1. else -1 for i in y])
 
 # iris = datasets.load_iris()
 # X = iris.data
 # y = iris.target
 
 # X, y = make_classification(n_samples=1000, n_features=100, n_classes=2)
-
-# a = pd.read_csv('sample20170117_labeled_0207.csv')
-# X = a.values[0: 100, 0: 110]
-# y = a.values[0: 100, 110]
-# y = np.array([1 if i == 1. else -1 for i in y])
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
@@ -37,11 +36,11 @@ dt.fit(X_train, y_train)
 dt_err = 1.0 - dt.score(X_test, y_test)
 
 ada_discrete = AdaBoostClassifier(base_estimator=dt_stump, learning_rate=learning_rate, n_estimators=n_estimators,
-                                  algorithm="SAMME")
+                                  algorithm='SAMME')
 ada_discrete.fit(X_train, y_train)
 
 ada_real = AdaBoostClassifier(base_estimator=dt_stump, learning_rate=learning_rate, n_estimators=n_estimators,
-                              algorithm="SAMME.R")
+                              algorithm='SAMME.R')
 ada_real.fit(X_train, y_train)
 
 fig = plt.figure()
