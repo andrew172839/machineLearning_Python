@@ -38,19 +38,15 @@ def main(unused_argv):
 
     val_monitor = learn.monitors.ValidationMonitor(X_val, y_val, early_stopping_rounds=200)
 
-    classifier1 = learn.DNNClassifier(
-        feature_columns=learn.infer_real_valued_columns_from_input(X_train),
-        hidden_units=[10, 20, 10],
-        n_classes=2)
+    classifier1 = learn.DNNClassifier(feature_columns=learn.infer_real_valued_columns_from_input(X_train),
+                                      hidden_units=[10, 20, 10], n_classes=2)
     classifier1.fit(x=X_train, y=y_train, steps=2000)
     predictions1 = list(classifier1.predict(X_test, as_iterable=True))
     score1 = metrics.accuracy_score(y_test, predictions1)
 
-    classifier2 = learn.DNNClassifier(
-        feature_columns=learn.infer_real_valued_columns_from_input(X_train),
-        hidden_units=[10, 20, 10],
-        n_classes=2,
-        config=tf.contrib.learn.RunConfig(save_checkpoints_secs=1))
+    classifier2 = learn.DNNClassifier(feature_columns=learn.infer_real_valued_columns_from_input(X_train),
+                                      hidden_units=[10, 20, 10], n_classes=2,
+                                      config=tf.contrib.learn.RunConfig(save_checkpoints_secs=1))
     classifier2.fit(x=X_train, y=y_train, steps=2000, monitors=[val_monitor])
     predictions2 = list(classifier2.predict(X_test, as_iterable=True))
     score2 = metrics.accuracy_score(y_test, predictions2)
