@@ -1,14 +1,14 @@
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
-from sklearn import cross_validation
 from sklearn import metrics
 import tensorflow as tf
-import numpy as np
 
+import pandas as pd
+import numpy as np
 from sklearn import datasets
 from sklearn.datasets import make_classification
-import pandas as pd
+from sklearn.model_selection import train_test_split
 
 layers = tf.contrib.layers
 learn = tf.contrib.learn
@@ -25,11 +25,8 @@ def my_model(features, target):
     logits = layers.fully_connected(features, 2, activation_fn=None)
     loss = tf.contrib.losses.softmax_cross_entropy(logits, target)
 
-    train_op = tf.contrib.layers.optimize_loss(
-        loss,
-        tf.contrib.framework.get_global_step(),
-        optimizer='Adam',
-        learning_rate=0.1)
+    train_op = tf.contrib.layers.optimize_loss(loss, tf.contrib.framework.get_global_step(), optimizer='Adam',
+                                               learning_rate=0.1)
     return ({'class': tf.argmax(logits, 1), 'prob': tf.nn.softmax(logits)}, loss, train_op)
 
 
@@ -45,7 +42,7 @@ def main(unused_argv):
 
     X, y = make_classification(n_samples=100, n_features=10, n_classes=2)
 
-    X_train, X_test, y_train, y_test = cross_validation.train_test_split(X, y, test_size=0.2)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
     classifier = learn.Estimator(model_fn=my_model)
     classifier.fit(X_train, y_train, steps=200)
