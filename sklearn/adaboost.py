@@ -46,8 +46,8 @@ ada_real.fit(X_train, y_train)
 fig = plt.figure()
 ax = fig.add_subplot(111)
 
-ax.plot([1, n_estimators], [dt_stump_err] * 2, 'k-', label='decision stump error')
-ax.plot([1, n_estimators], [dt_err] * 2, 'k--', label='decision tree error')
+ax.plot([1, n_estimators], [dt_stump_err] * 2, 'k-', label='decision stump')
+ax.plot([1, n_estimators], [dt_err] * 2, 'k--', label='decision tree')
 
 ada_discrete_err = np.zeros((n_estimators,))
 for i, y_pred in enumerate(ada_discrete.staged_predict(X_test)):
@@ -65,10 +65,10 @@ ada_real_err_train = np.zeros((n_estimators,))
 for i, y_pred in enumerate(ada_real.staged_predict(X_train)):
     ada_real_err_train[i] = zero_one_loss(y_pred, y_train)
 
-ax.plot(np.arange(n_estimators) + 1, ada_discrete_err, label='discrete adaBoost test error', color='red')
-ax.plot(np.arange(n_estimators) + 1, ada_discrete_err_train, label='discrete adaBoost train error', color='blue')
-ax.plot(np.arange(n_estimators) + 1, ada_real_err, label='real adaBoost test error', color='orange')
-ax.plot(np.arange(n_estimators) + 1, ada_real_err_train, label='real AdaBoost train error', color='green')
+ax.plot(np.arange(n_estimators) + 1, ada_discrete_err, label='discrete adaBoost, test', color='red')
+ax.plot(np.arange(n_estimators) + 1, ada_discrete_err_train, label='discrete adaBoost, train', color='blue')
+ax.plot(np.arange(n_estimators) + 1, ada_real_err, label='real adaBoost, test', color='orange')
+ax.plot(np.arange(n_estimators) + 1, ada_real_err_train, label='real adaBoost, train', color='green')
 
 ax.set_ylim((0.0, 0.5))
 ax.set_xlabel('n_estimators')
