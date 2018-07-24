@@ -14,9 +14,6 @@ iris = datasets.load_iris()
 X = iris.data[:, 0:2]
 y = iris.target
 
-
-
-
 # a = pd.read_csv('sample20170117_labeled_0207.csv')
 # X = a.values[0: 100, 0: 110]
 # y = a.values[0: 100, 110]
@@ -36,8 +33,8 @@ C = 1.0
 kernel = 1.0 * RBF([1.0, 1.0])
 
 classifiers = {'l1 logistic': LogisticRegression(C=C, penalty='l1'),
-               'l2 logistic (OvR)': LogisticRegression(C=C, penalty='l2'),
-               'linear SVC': SVC(kernel='linear', C=C, probability=True, random_state=0),
+               'l2 logistic': LogisticRegression(C=C, penalty='l2'),
+               'linear svc': SVC(kernel='linear', C=C, probability=True, random_state=0),
                'l2 logistic (multinomial)': LogisticRegression(C=C, solver='lbfgs', multi_class='multinomial'),
                'gpc': GaussianProcessClassifier(kernel)}
 
@@ -56,7 +53,7 @@ for index, (name, classifier) in enumerate(classifiers.items()):
 
     y_pred = classifier.predict(X_train)
     classif_rate = np.mean(y_pred.ravel() == y.ravel()) * 100
-    print("classif_rate for %s : %f " % (name, classif_rate))
+    print("classif_rate for %s, %f " % (name, classif_rate))
 
     probas = classifier.predict_proba(Xfull)
     n_classes = np.unique(y_pred).size
