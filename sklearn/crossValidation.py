@@ -1,25 +1,23 @@
-import numpy as np
 import matplotlib.pyplot as plt
-
 from sklearn.linear_model import LassoCV
 from sklearn.linear_model import Lasso
 from sklearn.model_selection import KFold
 from sklearn.model_selection import cross_val_score
-from sklearn import cross_validation
-from sklearn.model_selection import train_test_split
 
+import pandas as pd
+import numpy as np
 from sklearn import datasets
 from sklearn.datasets import make_classification
-import pandas as pd
-
-# diabetes = datasets.load_diabetes()
-# X = diabetes.data[:150]
-# y = diabetes.target[:150]
+from sklearn.model_selection import train_test_split
 
 # a = pd.read_csv('sample20170117_labeled_0207.csv')
 # X = a.values[0: 100, 0: 110]
 # y = a.values[0: 100, 110]
 # y = np.array([1 if i == 1. else -1 for i in y])
+
+# iris = datasets.load_iris()
+# X = iris.data
+# y = iris.target
 
 X, y = make_classification(n_samples=1000, n_features=100, n_classes=2)
 
@@ -49,7 +47,7 @@ plt.semilogx(alphas, scores - std_error, 'b--')
 
 plt.fill_between(alphas, scores + std_error, scores - std_error, alpha=0.2)
 
-plt.ylabel('cv score +/- std error')
+plt.ylabel('cv score')
 plt.xlabel('alpha')
 plt.axhline(np.max(scores), linestyle='--', color='.5')
 plt.xlim([alphas[0], alphas[-1]])
