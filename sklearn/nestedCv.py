@@ -53,7 +53,7 @@ plt.title("non-nested and nested cross validation", x=0.5, y=1.1, fontsize="15")
 
 plt.subplot(212)
 difference_plot = plt.bar(range(NUM_TRIALS), score_difference)
-plt.xlabel("individual trial #")
+plt.xlabel("# individual trial")
 plt.legend([difference_plot], ["non-nested cv - nested cv score"], bbox_to_anchor=(0, 1, .8, 0))
 plt.ylabel("score difference", fontsize="14")
 
