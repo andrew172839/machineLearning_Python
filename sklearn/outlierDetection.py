@@ -1,4 +1,3 @@
-import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.font_manager
 from sklearn.datasets import load_boston
@@ -6,23 +5,26 @@ from sklearn.covariance import EllipticEnvelope
 from sklearn.svm import OneClassSVM
 
 import pandas as pd
+import numpy as np
 from sklearn import datasets
 from sklearn.datasets import make_classification
 from sklearn.model_selection import train_test_split
 
-# iris = datasets.load_iris()
-# X = iris.data
-# y = iris.target
+X1 = load_boston()['data'][:, [8, 10]]
+X2 = load_boston()['data'][:, [5, 12]]
 
 # a = pd.read_csv('sample20170117_labeled_0207.csv')
 # X = a.values[0: 100, 0: 110]
 # y = a.values[0: 100, 110]
 # y = np.array([1 if i == 1. else -1 for i in y])
 
-# X1, X2, y1, y2 = train_test_split(X, y, test_size=0.2)
+# iris = datasets.load_iris()
+# X = iris.data
+# y = iris.target
 
-X1 = load_boston()['data'][:, [8, 10]]
-X2 = load_boston()['data'][:, [5, 12]]
+# X, y = make_classification(n_samples=1000, n_features=100, n_classes=2)
+
+# X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
 classifiers = \
     {"empirical covariance": EllipticEnvelope(support_fraction=1., contamination=0.261),
