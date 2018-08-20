@@ -22,17 +22,14 @@ y = iris.target
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
-print(X_train)
-print(y_train)
-
 svc = SVC(kernel="linear")
 rfecv = RFECV(estimator=svc, step=1, cv=StratifiedKFold(2), scoring='accuracy')
 rfecv.fit(X_train, y_train)
 
-print("optimal number of features, %d" % rfecv.n_features_)
+print("optimal # features, %d" % rfecv.n_features_)
 
 plt.figure()
 plt.xlabel("# features selected")
-plt.ylabel("cross validation score")
+plt.ylabel("cv score")
 plt.plot(range(1, len(rfecv.grid_scores_) + 1), rfecv.grid_scores_)
 plt.show()
