@@ -1,11 +1,11 @@
-import numpy as np
 import matplotlib.pyplot as plt
 from sklearn import linear_model
-from sklearn.model_selection import train_test_split
 
+import pandas as pd
+import numpy as np
 from sklearn import datasets
 from sklearn.datasets import make_classification
-import pandas as pd
+from sklearn.model_selection import train_test_split
 
 a = pd.read_csv('sample20170117_labeled_0207.csv')
 X = a.values[0: 100, 0: 110]
@@ -37,5 +37,4 @@ ax.set_xlim(ax.get_xlim()[::-1])
 plt.xlabel('alpha')
 plt.ylabel('weights')
 plt.title('ridge coefficients')
-plt.axis('tight')
 plt.show()
