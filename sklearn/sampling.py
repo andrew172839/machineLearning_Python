@@ -1,16 +1,18 @@
-from __future__ import division
-from __future__ import print_function
 from datetime import datetime
 from sklearn.externals.six.moves import xrange
 from sklearn.utils.random import sample_without_replacement
 
 import gc
-import sys
 import optparse
 import operator
 import matplotlib.pyplot as plt
-import numpy as np
 import random
+
+import pandas as pd
+import numpy as np
+from sklearn import datasets
+from sklearn.datasets import make_classification
+from sklearn.model_selection import train_test_split
 
 
 def compute_time(t_start, delta):
@@ -43,29 +45,25 @@ if __name__ == "__main__":
 
     sampling_algorithm = {}
 
-    sampling_algorithm["python-core-sample"] = \
-        lambda n_population, n_sample: \
-            random.sample(xrange(n_population), n_sample)
+    sampling_algorithm["python-core-sample"] = lambda n_population, n_sample: random.sample(xrange(n_population),
+                                                                                            n_sample)
 
-    sampling_algorithm["custom-auto"] = \
-        lambda n_population, n_samples, random_state=None: \
-            sample_without_replacement(n_population, n_samples, method="auto", random_state=random_state)
+    sampling_algorithm["custom-auto"] = lambda n_population, n_samples: sample_without_replacement(n_population,
+                                                                                                   n_samples,
+                                                                                                   method="auto")
 
-    sampling_algorithm["custom-tracking-selection"] = \
-        lambda n_population, n_samples, random_state=None: \
-            sample_without_replacement(n_population, n_samples, method="tracking_selection", random_state=random_state)
+    sampling_algorithm["custom-tracking-selection"] = lambda n_population, n_samples: sample_without_replacement(
+        n_population, n_samples, method="tracking_selection")
 
-    sampling_algorithm["custom-reservoir-sampling"] = \
-        lambda n_population, n_samples, random_state=None: \
-            sample_without_replacement(n_population, n_samples, method="reservoir_sampling", random_state=random_state)
+    sampling_algorithm["custom-reservoir-sampling"] = lambda n_population, n_samples: sample_without_replacement(
+        n_population, n_samples, method="reservoir_sampling")
 
-    sampling_algorithm["custom-pool"] = \
-        lambda n_population, n_samples, random_state=None: \
-            sample_without_replacement(n_population, n_samples, method="pool", random_state=random_state)
+    sampling_algorithm["custom-pool"] = lambda n_population, n_samples: sample_without_replacement(n_population,
+                                                                                                   n_samples,
+                                                                                                   method="pool")
 
-    sampling_algorithm["numpy-permutation"] = \
-        lambda n_population, n_sample: \
-            np.random.permutation(n_population)[:n_sample]
+    sampling_algorithm["numpy-permutation"] = lambda n_population, n_sample: np.random.permutation(n_population)[
+                                                                             :n_sample]
 
     sampling_algorithm = dict((key, value)
                               for key, value in sampling_algorithm.items()
@@ -92,7 +90,7 @@ if __name__ == "__main__":
         print("%s \t | %s " % (str(key).ljust(16), str(value).strip().center(12)))
     print("")
 
-    fig = plt.figure('sample w / o replacement benchmark results')
+    fig = plt.figure('sampling w / o replacement benchmark results')
     plt.title("# population = %s, # times = %s" % (opts.n_population, opts.n_times))
     ax = fig.add_subplot(111)
     for name in sampling_algorithm:
@@ -107,4 +105,4 @@ if __name__ == "__main__":
     handles2, labels2 = zip(*hl)
     ax.legend(handles2, labels2, loc=0)
 
-plt.show()
+    plt.show()
